@@ -1,7 +1,5 @@
 package com.husky.concurrent.simple;
 
-import java.util.concurrent.ExecutorService;
-
 /**
  * 线程生命特征
  * @author dengweichang
@@ -9,7 +7,10 @@ import java.util.concurrent.ExecutorService;
  * 一个线程的状态包含5部分：
  * <li>
  * @see Thread#name		线程名称
- * @see Thread#isAlive() 	存活状态
+ * @see Thread#isAlive() 	存活标识
+ * @see Thread#getState() 	执行状态 {@link java.lang.Thread.State}
+ * @see Thread#priority		优先级
+ * @see Thread#daemon 	是否为守护线程
  * </li>
  */
 @SuppressWarnings("all")
