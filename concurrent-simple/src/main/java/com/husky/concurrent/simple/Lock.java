@@ -12,10 +12,7 @@ public class Lock {
 
 	public static void main(String[] args) throws InterruptedException {
 //		new DeadLock().deadTest();
-		StoppableThread stoppableThread = new StoppableThread();
-		stoppableThread.start();
-		Thread.sleep(100);
-		stoppableThread.stopThread();
+		volatileTest();
 	}
 
 	private static void volatileTest() throws InterruptedException {
