@@ -1,5 +1,7 @@
 package com.husky.concurrent.simple;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * 程序活跃性
  * @author dengweichang
@@ -73,14 +75,17 @@ class DeadLock{
 	}
 }
 
+@Slf4j
 class StoppableThread extends Thread {
 	private boolean stopped;
 
 	@Override
 	public void run() {
-		int i = 0;
-		while (!stopped) {
-			System.out.println("running" + i++);
+		while (true) {
+			if (stopped) {
+				log.info("running stop");
+				break;
+			}
 		}
 	}
 
