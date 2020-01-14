@@ -75,6 +75,9 @@ class DeadLock{
 	}
 }
 
+/**
+ * 同步方法（执行完成后释放线程锁）/线程切换/CPU空闲会强制读取一次主内存
+ */
 @Slf4j
 class StoppableThread extends Thread {
 	private boolean stopped;
@@ -85,6 +88,8 @@ class StoppableThread extends Thread {
 			if (stopped) {
 				log.info("running stop");
 				break;
+			} else {
+				test();
 			}
 		}
 	}
@@ -92,5 +97,9 @@ class StoppableThread extends Thread {
 	void stopThread() {
 		stopped = true;
 		System.out.println("------stop------");
+	}
+
+	private void test () {
+
 	}
 }
