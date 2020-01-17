@@ -43,7 +43,9 @@ public class ExecutorDemo {
 	public static void main(String[] args) throws ExecutionException, InterruptedException {
 		try {
 //			callAble();
-			runnable();
+//			runnable();
+//			awaitTermination();
+			System.out.println(Integer.toBinaryString((1 << 29)-1 ));
 		} finally {
 			EXECUTOR.shutdown();
 		}
@@ -86,5 +88,28 @@ public class ExecutorDemo {
 		Future<?> submit = EXECUTOR.submit(runnable);
 		System.out.println(submit.get());
 		EXECUTOR.execute(runnable);
+	}
+
+	private static void awaitTermination() throws InterruptedException {
+		EXECUTOR.submit(() -> {
+			try {
+				Thread.sleep(1000);
+				System.out.println("task A is completed");
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		});
+		EXECUTOR.submit(() -> {
+			try {
+				Thread.sleep(1000);
+				System.out.println("task B is completed");
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		});
+		System.out.println("task count:" + EXECUTOR.getTaskCount());
+		boolean b = EXECUTOR.awaitTermination(5000, TimeUnit.MILLISECONDS);
+		System.out.println("active task count:" + EXECUTOR.getActiveCount());
+		System.out.println(b);
 	}
 }
