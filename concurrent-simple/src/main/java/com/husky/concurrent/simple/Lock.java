@@ -1,5 +1,7 @@
 package com.husky.concurrent.simple;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * 程序活跃性
  * @author dengweichang
@@ -12,10 +14,7 @@ public class Lock {
 
 	public static void main(String[] args) throws InterruptedException {
 //		new DeadLock().deadTest();
-		StoppableThread stoppableThread = new StoppableThread();
-		stoppableThread.start();
-		Thread.sleep(100);
-		stoppableThread.stopThread();
+		volatileTest();
 	}
 
 	private static void volatileTest() throws InterruptedException {
@@ -76,19 +75,31 @@ class DeadLock{
 	}
 }
 
+/**
+ * 同步方法（执行完成后释放线程锁）/线程切换/CPU空闲会强制读取一次主内存
+ */
+@Slf4j
 class StoppableThread extends Thread {
 	private boolean stopped;
 
 	@Override
 	public void run() {
-		int i = 0;
-		while (!stopped) {
-			System.out.println("running" + i++);
+		while (true) {
+			if (stopped) {
+				log.info("running stop");
+				break;
+			} else {
+				test();
+			}
 		}
 	}
 
 	void stopThread() {
 		stopped = true;
 		System.out.println("------stop------");
+	}
+
+	private void test () {
+
 	}
 }
